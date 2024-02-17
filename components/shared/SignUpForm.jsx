@@ -47,7 +47,7 @@ const SignUp = () => {
   };
   return (
     <div className="flex items-center">
-      <form className=" mx-auto p-6 rounded-lg shadow-md bg-[#3a5ba0] w-[50%]">
+      <form className=" mx-auto p-6 rounded-lg shadow-md bg-[#3a5ba0] w-[60%] sm:w-[50%]">
         <h2 className="text-2xl font-bold mb-4 text-white">Sign up</h2>
         <div className="mb-4">
           <input
