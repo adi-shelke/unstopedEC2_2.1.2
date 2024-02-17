@@ -10,7 +10,7 @@ const page = () => {
           <SignUp />
         </div>
         <div className="w-[50%]">
-          <Image src="/assets/login.svg" width={500} height={500} />
+          <Image src="/assets/signup.svg" width={500} height={500} />
         </div>
       </div>
     </div>

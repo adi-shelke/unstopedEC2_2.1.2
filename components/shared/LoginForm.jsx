@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-const SignUp = () => {
+const LoginForm = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -48,37 +48,7 @@ const SignUp = () => {
   return (
     <div className="flex items-center">
       <form className=" mx-auto p-6 rounded-lg shadow-md bg-[#3a5ba0] w-[50%]">
-        <h2 className="text-2xl font-bold mb-4 text-white">Sign up</h2>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="First Name"
-            className={`w-full px-3 py-2 hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-              errors.firstName ? "border-red-500" : ""
-            }`}
-          />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Last Name"
-            className={`w-full px-3 py-2  hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm${
-              errors.lastName ? "border-red-500" : ""
-            }`}
-          />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
-          )}
-        </div>
+        <h2 className="text-2xl font-bold mb-4 text-white">Login</h2>
         <div className="mb-4">
           <input
             type="email"
@@ -114,13 +84,12 @@ const SignUp = () => {
           onClick={handleSubmit}
           className="w-full py-2 bg-gray-800 text-white rounded-md hover:bg-[#FF8911] focus:outline-none focus:bg-blue-600"
         >
-          Sign up
+          Login
         </button>
-
         <p className="mt-2 text-white">
-          Alread have account?{" "}
-          <Link href="/auth/login" className="underline hover:text-[#FF8911]">
-            Login
+          Don't have an account?{" "}
+          <Link href="/auth/signup" className="underline hover:text-[#FF8911]">
+            Signup
           </Link>
         </p>
       </form>
@@ -128,4 +97,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default LoginForm;
