@@ -39,7 +39,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link href="/">
+          <Link href="/#feed">
             <span>
               <Image
                 src="/assets/icons/tracks.png"
