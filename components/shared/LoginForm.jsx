@@ -1,10 +1,11 @@
 "use client";
 import { submitDataLogin } from "@/lib/auth/utils";
-import { set } from "mongoose";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 const LoginForm = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,7 +38,9 @@ const LoginForm = () => {
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
       const result = await submitDataLogin(formData);
-      if (result.status == 404) setloginError(true);
+      if (result.status == 404 || result.status==401) setloginError(true);
+      else
+        router.push("/");
       console.log("Form submitted:", formData);
     }
   };

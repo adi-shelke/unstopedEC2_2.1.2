@@ -2,8 +2,10 @@
 import { submitDataSignup } from "@/lib/auth/utils";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 const SignUp = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,6 +14,7 @@ const SignUp = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loginError, setloginError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -20,7 +23,7 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation
@@ -37,7 +40,7 @@ const SignUp = () => {
     if (!formData.repeatpassword) {
       newErrors.repeatpassword = "Please enter your confirm password";
     }
-    if(formData.password !== formData.repeatpassword){
+    if (formData.password !== formData.repeatpassword) {
       newErrors.repeatpassword = "Password does not match";
     }
 
@@ -46,7 +49,10 @@ const SignUp = () => {
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
-      submitDataSignup(formData);
+      const result = await submitDataSignup(formData);
+      if (result.status == 500) setloginError(true);
+      else
+      router.push('/')
       console.log("Form submitted:", formData);
     }
   };
@@ -111,7 +117,9 @@ const SignUp = () => {
             }`}
           />
           {errors.repeatpassword && (
-            <p className="text-[#e89b3e] text-sm mt-1">{errors.repeatpassword}</p>
+            <p className="text-[#e89b3e] text-sm mt-1">
+              {errors.repeatpassword}
+            </p>
           )}
         </div>
         <button
@@ -121,6 +129,9 @@ const SignUp = () => {
         >
           Sign up
         </button>
+        {loginError && (
+          <p className="mt-2 text-[#e89b3e] font-bold">Internal Server Error</p>
+        )}
 
         <p className="mt-2 text-white">
           Alread have account?{" "}
