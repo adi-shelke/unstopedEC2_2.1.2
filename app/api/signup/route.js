@@ -63,6 +63,9 @@ export const POST = async (request) => {
     });
   } catch (err) {
     console.log(err);
-    throw new Error("Failed to fetch posts!");
+    return NextResponse.json({
+      message: "Internal Serve error",
+      status: 500,
+    });
   }
 };

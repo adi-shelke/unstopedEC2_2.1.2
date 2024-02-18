@@ -37,6 +37,9 @@ const SignUp = () => {
     if (!formData.repeatpassword) {
       newErrors.repeatpassword = "Please enter your confirm password";
     }
+    if(formData.password !== formData.repeatpassword){
+      newErrors.repeatpassword = "Password does not match";
+    }
 
     setErrors(newErrors);
 
@@ -63,7 +66,7 @@ const SignUp = () => {
             }`}
           />
           {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            <p className="text-[#e89b3e] text-sm mt-1">{errors.name}</p>
           )}
         </div>
         <div className="mb-4">
@@ -78,7 +81,7 @@ const SignUp = () => {
             }`}
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            <p className="text-[#e89b3e] text-sm mt-1">{errors.email}</p>
           )}
         </div>
         <div className="mb-4">
@@ -93,7 +96,7 @@ const SignUp = () => {
             }`}
           />
           {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            <p className="text-[#e89b3e] text-sm mt-1">{errors.password}</p>
           )}
         </div>
         <div className="mb-4">
@@ -108,7 +111,7 @@ const SignUp = () => {
             }`}
           />
           {errors.repeatpassword && (
-            <p className="text-red-500 text-sm mt-1">{errors.repeatpassword}</p>
+            <p className="text-[#e89b3e] text-sm mt-1">{errors.repeatpassword}</p>
           )}
         </div>
         <button
