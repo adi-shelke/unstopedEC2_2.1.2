@@ -26,7 +26,7 @@ const UploadPage = () => {
       console.log("File submitted:", file);
       const form = new FormData();
       form.append("file", file);
-      const response = await fetch("/api/files", {
+      const response = await fetch("/api/files/upload", {
         method: "POST",
         body: form,
       }).then((res) => res.json());

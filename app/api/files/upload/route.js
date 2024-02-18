@@ -25,6 +25,7 @@ export async function POST(request) {
 
   await s3.send(putObjCmd);
   const publicURL = (await getSignedUrl(s3, putObjCmd)).split("?")[0];
+  console.log("publicURL: ", publicURL);
   // send the publicURL to metadata storage
   return NextResponse.json({ success: "the file is uploaded successfully" });
 }
