@@ -50,8 +50,8 @@ export async function POST(request) {
     audience: "urn:example:audience", // audience
   });
 
-  // const userId = payload?.id || "";
-  // console.log(userId);
+  const userId = id;
+  console.log(userId);
   const putObjCmd = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: hexFileName,
@@ -64,10 +64,10 @@ export async function POST(request) {
   console.log("publicURL: ", publicURL);
   // send the publicURL to metadata storage
   await connectToDatabase();
-  
+
   const dbFile = new File({
     title: title,
-    author: "65d24d6e89549b38d9051b06",
+    author: userId,
     genre: genre,
     price: price,
     url: publicURL,
@@ -76,5 +76,6 @@ export async function POST(request) {
     tags: tags,
   });
   await dbFile.save();
+  console.log("dbFile: ", dbFile);
   return NextResponse.json({ success: "the file is uploaded successfully" });
 }
