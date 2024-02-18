@@ -33,6 +33,7 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+    scroll-behavior: smooth;
   }
  
   .dark {
@@ -176,3 +177,13 @@ audio::-webkit-media-controls-timeline {
   margin-left: 10px;
   /* margin-right: 10px; */
 }
+
+
+
+
+
+
+
+
+
+

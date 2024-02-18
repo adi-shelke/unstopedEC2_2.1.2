@@ -12,7 +12,7 @@ const Feed = () => {
   const electronic = tracksData.filter((track) => track.genre === "electronic");
 
   return (
-    <div className="w-full flex justify-center mt-5 flex-col">
+    <div id="feed" className="w-full flex justify-center mt-5 flex-col bg-[#686bff]">
       {/*trending */}
       <div className=" w-full flex flex-col items-center justify-center border-b-2  border-[#ff8d30]">
         <div className="justify-self-start w-full pl-3">
