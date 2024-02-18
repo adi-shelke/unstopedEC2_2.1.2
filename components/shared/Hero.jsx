@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="w-[100vw] h-[70vh] bg-[url('/assets/bg.jpg')] bg-cover flex ">
+    <div className="w-[100vw] h-[100vh] bg-[url('/assets/bg.jpg')] bg-cover flex ">
       <div className="w-[50%]  h-full flex text-white flex-col justify-center pl-4 px-5">
         <p className="text-[60px] font-bold">BeatMarket</p>
         <p className="mt-3 font-semibold text-[20px]">
@@ -15,7 +15,7 @@ const Hero = () => {
           Beats and Creative Collaboration.
         </p>
         <Link href="/#feed">
-          <Button className="w-[100px] bg-white text-black mt-3 hover:bg-[#d18e4f] hover:text-white">
+          <Button className="w-[100px] bg-white text-black mt-3 duration-300 ease-in-out hover:bg-[#d18e4f] hover:text-white">
             Explore
           </Button>
         </Link>

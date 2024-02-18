@@ -1,5 +1,6 @@
 "use client";
 import { submitDataLogin } from "@/lib/auth/utils";
+import { set } from "mongoose";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -10,6 +11,7 @@ const LoginForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loginError, setloginError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -18,7 +20,7 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation
@@ -34,7 +36,8 @@ const LoginForm = () => {
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
-      submitDataLogin(formData);
+      const result = await submitDataLogin(formData);
+      if (result.status == 404) setloginError(true);
       console.log("Form submitted:", formData);
     }
   };
@@ -79,6 +82,10 @@ const LoginForm = () => {
         >
           Login
         </button>
+        {loginError && (
+          <p className="mt-2 text-[#e89b3e] font-bold">Wrong Credentials</p>
+        )}
+
         <p className="mt-2 text-white">
           Don't have an account?{" "}
           <Link href="/auth/signup" className="underline hover:text-[#FF8911]">
