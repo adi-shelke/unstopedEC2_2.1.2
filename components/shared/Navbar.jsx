@@ -4,7 +4,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <div className="h-[60px] flex items-center w-full justify-between bg-[#363849] mt-4 px-7">
+    <div className="h-[60px] flex items-center w-full justify-between bg-[#363849] px-7">
       <div className="text-white">
         <Link href="/">
           <p>BeatMakers</p>

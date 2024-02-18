@@ -14,7 +14,7 @@ const Feed = () => {
   return (
     <div className="w-full flex justify-center mt-5 flex-col">
       {/*trending */}
-      <div className=" w-full flex flex-col items-center justify-center border-b-2  border-indigo-500">
+      <div className=" w-full flex flex-col items-center justify-center border-b-2  border-[#ff8d30]">
         <div className="justify-self-start w-full pl-3">
           <h1 className="text-3xl font-bold text-white my-5">Pop</h1>
         </div>
@@ -51,7 +51,7 @@ const Feed = () => {
         </div>
       </div>
 
-      <div className=" w-full flex flex-col items-center justify-center border-b-2  border-indigo-500">
+      <div className=" w-full flex flex-col items-center justify-center border-b-2  border-[#ff8d30]">
         <div className="justify-self-start w-full pl-3">
           <h1 className="text-3xl font-bold text-white my-5">Rock</h1>
         </div>
@@ -87,7 +87,7 @@ const Feed = () => {
           </Swiper>
         </div>
       </div>
-      <div className=" w-full flex flex-col items-center justify-center border-b-2  border-indigo-500">
+      <div className=" w-full flex flex-col items-center justify-center border-b-2  border-[#ff8d30]">
         <div className="justify-self-start w-full pl-3">
           <h1 className="text-3xl font-bold text-white my-5">Electronic</h1>
         </div>
