@@ -73,7 +73,9 @@ const SignUp = () => {
       const response = await fetch("/api/files/upload", {
         method: "POST",
         body: form,
-      }).then((res) => res.json());
+      })
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
       console.log("response: ", response);
       console.log("Form submitted:", formData);
     }
