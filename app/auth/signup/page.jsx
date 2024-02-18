@@ -15,6 +15,7 @@ const page = () => {
             src="/assets/signup.svg"
             width={500}
             height={500}
+            alt="Signup Image"
           />
         </div>
       </div>
