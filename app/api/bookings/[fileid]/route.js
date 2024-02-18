@@ -1,6 +1,7 @@
 import { connectToDatabase } from "@/lib/database/dbUtils";
 import { File } from "@/lib/database/models/File";
 import { User } from "@/lib/database/models/User";
+import { error } from "console";
 import { NextResponse } from "next/server";
 
 const { jwtVerify } = require("jose-node-cjs-runtime");
@@ -17,7 +18,6 @@ export const GET = async (request, { params }) => {
     const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
     const cookies = cookie.parse(request?.headers?.get("cookie"));
     let token = cookies?.["OutSiteJWT"];
-    console.log(token);
 
     if (!token) {
       return NextResponse.json({
@@ -88,13 +88,16 @@ export const GET = async (request, { params }) => {
       mode: "payment",
       currency: "inr",
     });
-    console.log(session);
     // send it to client
     return NextResponse.json({
-      status: "success",
+      status: 200,
       id: session.id,
     });
   } catch (err) {
+    return NextResponse.json({
+      status: 500,
+      message:error
+    });
     console.log(err);
     console.log("Some error happend while creating your session");
   }

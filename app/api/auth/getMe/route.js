@@ -11,16 +11,22 @@ export const GET = async (request) => {
     //   secrete key
     const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
     const cookies = cookie.parse(request?.headers?.get("cookie"));
+    //console.log(cookies);
     let token = cookies?.["OutSiteJWT"];
     console.log(token);
-
     if (!token) {
+      console.log("No token in cookie");
       return NextResponse.json({
-        status: "fail",
+        status: 401,
         message: "You need to log in",
       });
     }
 
+    // token = token?.split("=")?.[1];
+    // if (!token) {
+    //   console.log("No token");
+    //   return NextResponse.json({ status: 401, message: "Login to get access" });
+    // }
     const {
       payload: { id },
       protectedHeader,
@@ -33,22 +39,19 @@ export const GET = async (request) => {
     await connectToDatabase();
     const user = await User.findById(userId);
     if (!user) {
-      return NextResponse.json({
-        status: "fail",
-        message: "You need to log in",
-      });
+      console.log("No user");
+      return NextResponse.json({ status: 401, message: "Login to get access" });
     }
     user.password = null;
     return NextResponse.json({
-      status: "success",
+      status: 200,
       data: user,
     });
   } catch (err) {
     console.log(err);
-    console.log("error in get me");
     return NextResponse.json({
-      status: "fail",
-      message: "You need to log in",
+      status: 401,
+      message: "Unauthorized access",
     });
   }
 };
