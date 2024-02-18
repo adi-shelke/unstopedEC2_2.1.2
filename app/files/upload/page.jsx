@@ -18,12 +18,19 @@ const UploadPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (file) {
       // TODO: Submit the file to the backend route
       console.log("File submitted:", file);
+      const form = new FormData();
+      form.append("file", file);
+      const response = await fetch("/api/files", {
+        method: "POST",
+        body: form,
+      }).then((res) => res.json());
+      console.log("response: ", response);
     } else {
       setError("Please select a file to upload.");
     }
