@@ -1,4 +1,5 @@
 "use client";
+import { submitDataLogin } from "@/lib/auth/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -22,24 +23,18 @@ const LoginForm = () => {
 
     // Basic validation
     const newErrors = {};
-    if (!formData.firstName) {
-      newErrors.firstName = "Please enter your first name";
-    }
-    if (!formData.lastName) {
-      newErrors.lastName = "Please enter your last name";
-    }
     if (!formData.email) {
       newErrors.email = "Please enter your email";
     }
     if (!formData.password) {
-      newErrors.password = "Please enter your password";
+      newErrors.pasword = "Please enter your password";
     }
 
     setErrors(newErrors);
-
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
+      submitDataLogin(formData);
       console.log("Form submitted:", formData);
     }
   };
