@@ -6,7 +6,7 @@ const { createSecretKey } = require("crypto");
 const { SignJWT } = require("jose-node-cjs-runtime");
 
 import { connectToDatabase } from "@/lib/database/dbUtils";
-import { User } from "@/lib/database/User";
+import { User } from "@/lib/database/models/User";
 
 const signToken = async function (id) {
   const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
