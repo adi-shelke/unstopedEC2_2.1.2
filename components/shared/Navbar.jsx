@@ -50,9 +50,26 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
+          <Link href="/files/upload">
+            <span>
+              <Image
+                src="/assets/icons/upload.png"
+                width={20}
+                height={20}
+                alt="login"
+              />
+            </span>
+          </Link>
+        </li>
+        <li>
           <Link href="/auth/login">
             <span>
-              <Image src="/assets/icons/login.png" width={20} height={20} alt="login"/>
+              <Image
+                src="/assets/icons/login.png"
+                width={20}
+                height={20}
+                alt="login"
+              />
               Login
             </span>
           </Link>

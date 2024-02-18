@@ -37,8 +37,8 @@ const UploadPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 flex justify-center items-center bg-gray-200 min-h-screen">
-      <div className="bg-white p-4 rounded-lg">
+    <div className="container p-4 flex justify-center items-center w-[100vw] bg-[#363849]  h-[100vh]">
+      <div className="bg-[#3a5ba0] text-white p-4 rounded-lg w-[40%] h-[40%]">
         <h1 className="text-2xl font-bold mb-4">Upload Audio File</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -50,20 +50,14 @@ const UploadPage = () => {
               id="fileInput"
               accept="audio/*"
               onChange={handleFileChange}
-              className="hidden"
+              className=" w-full px-3 py-2  hover:shadow-lg duration-300 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
-            <label
-              htmlFor="fileInput"
-              className="block bg-black  text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600"
-            >
-              Choose File
-            </label>
             {file && <span className="text-gray-500">{file.name}</span>}
             {error && <p className="text-red-500 mt-2">{error}</p>}
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            className="bg-gray-800 text-white rounded-md hover:bg-[#FF8911] px-3 py-2"
           >
             Upload
           </button>

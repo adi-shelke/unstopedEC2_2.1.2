@@ -4,15 +4,15 @@ import React from "react";
 
 const Card = ({ track }) => {
   return (
-    <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px] mx-3">
+    <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#1588ff] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
       <Link
         href={`/events/${track._id}`}
         style={{ backgroundImage: `url(${track.imageUrl})` }}
-        className="flex-center flex-grow bg-gray-50 bg-contain bg-no-repeat bg-center text-grey-500"
+        className="flex-center flex-grow bg-gray-50 bg-cover bg-no-repeat bg-center text-grey-500"
       />
-      <div className="flex min-h-[230px] flex-col gap-3 p-5 md:gap-4">
+      <div className="flex min-h-[100px] flex-col gap-3 p-5 md:gap-4">
         <Link href={`/events/${track._id}`}>
-          <p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 text-black">
+          <p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1">
             {track.title}
           </p>
         </Link>
