@@ -1,13 +1,25 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { serialize } from "cookie";
+
+const { createSecretKey } = require("crypto");
+const { SignJWT } = require("jose-node-cjs-runtime");
+
 import { connectToDatabase } from "@/lib/database/dbUtils";
 import { User } from "@/lib/database/User";
-const jwt = require("jsonwebtoken");
-import { serialize } from "cookie";
-const signToken = function (id) {
-  return jwt.sign({ id }, process.env.JWT_STRING, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+
+const signToken = async function (id) {
+  const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
+
+  const token = await new SignJWT({ id })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setIssuer("urn:example:issuer")
+    .setAudience("urn:example:audience")
+    .setExpirationTime(process.env.JWT_EXPIRES_IN)
+    .sign(secretKey);
+  console.log(token);
+  return token;
 };
 
 export const POST = async (request) => {
@@ -28,7 +40,7 @@ export const POST = async (request) => {
     await newUser.save();
     const user = await User.findOne({ email });
 
-    const token = signToken(user._id);
+    const token = await signToken(user._id);
 
     const seralized = serialize("OutSiteJWT", token, {
       httpOnly: true,

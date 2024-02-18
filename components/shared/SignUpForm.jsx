@@ -1,13 +1,14 @@
 "use client";
+import { submitDataSignup } from "@/lib/auth/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
+    repeatpassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -24,11 +25,8 @@ const SignUp = () => {
 
     // Basic validation
     const newErrors = {};
-    if (!formData.firstName) {
-      newErrors.firstName = "Please enter your first name";
-    }
-    if (!formData.lastName) {
-      newErrors.lastName = "Please enter your last name";
+    if (!formData.name) {
+      newErrors.name = "Please enter your name";
     }
     if (!formData.email) {
       newErrors.email = "Please enter your email";
@@ -36,12 +34,16 @@ const SignUp = () => {
     if (!formData.password) {
       newErrors.password = "Please enter your password";
     }
+    if (!formData.repeatpassword) {
+      newErrors.repeatpassword = "Please enter your confirm password";
+    }
 
     setErrors(newErrors);
 
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
+      submitDataSignup(formData);
       console.log("Form submitted:", formData);
     }
   };
@@ -52,31 +54,16 @@ const SignUp = () => {
         <div className="mb-4">
           <input
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
-            placeholder="First Name"
+            placeholder="Name"
             className={`w-full px-3 py-2 hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-              errors.firstName ? "border-red-500" : ""
+              errors.name ? "border-red-500" : ""
             }`}
           />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Last Name"
-            className={`w-full px-3 py-2  hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm${
-              errors.lastName ? "border-red-500" : ""
-            }`}
-          />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
           )}
         </div>
         <div className="mb-4">
@@ -86,8 +73,8 @@ const SignUp = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-              errors.email ? "border-red-500 " : ""
+            className={`w-full px-3 py-2  hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm${
+              errors.email ? "border-red-500" : ""
             }`}
           />
           {errors.email && (
@@ -101,12 +88,27 @@ const SignUp = () => {
             value={formData.password}
             onChange={handleChange}
             placeholder="Password"
-            className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-              errors.password ? "border-red-500" : ""
+            className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+              errors.email ? "border-red-500 " : ""
             }`}
           />
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <input
+            type="password"
+            name="repeatpassword"
+            value={formData.repeatpassword}
+            onChange={handleChange}
+            placeholder="Confirm Password"
+            className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-white rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+              errors.repeatpassword ? "border-red-500" : ""
+            }`}
+          />
+          {errors.repeatpassword && (
+            <p className="text-red-500 text-sm mt-1">{errors.repeatpassword}</p>
           )}
         </div>
         <button
