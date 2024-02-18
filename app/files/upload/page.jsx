@@ -39,7 +39,12 @@ const SignUp = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("price", formData.price);
+    formDataToSend.append("file", formData.file);
+    formDataToSend.append("tags", formData.tags);
+    formDataToSend.append("genre", formData.genre);
     // Basic validation
     const newErrors = {};
     if (!formData.title || formData.length < 3) {
@@ -58,10 +63,7 @@ const SignUp = () => {
     if (Object.keys(newErrors).length === 0) {
       const options = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       };
       const response = await fetch("/api/files/upload", options);
       // Here you can submit the form data
@@ -130,9 +132,9 @@ const SignUp = () => {
         <div className="mb-4">
           <input
             type="file"
-            name="tags"
+            name="file"
             onChange={handleFileChange}
-            placeholder="Enter tags"
+            placeholder="Select file to upload"
             className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
               errors?.file ? "border-red-500 " : ""
             }`}
