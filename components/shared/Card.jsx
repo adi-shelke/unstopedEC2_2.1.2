@@ -9,6 +9,19 @@ const Card = ({ track }) => {
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
+  const handleBuy = async (trackId) => {
+    console.log("Hii");
+    console.log(trackId);
+    const options={
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({ trackId }),
+    }
+    const response = await fetch(`/api/files/buy`,options);
+    const data = await response.json();
+  };
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#6a849f] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
       <div
@@ -30,14 +43,13 @@ const Card = ({ track }) => {
           </div>
           <div className="flex flex-col items-center">
             <p className="text-black">{`₹ ${track.price}`}</p>
-            <Link href={`/buy/${track._id}`}>
             <Image
               src="/assets/icons/cart.png"
               width={20}
               height={20}
               alt="cart"
+              onClick={() => {handleBuy(track._id)}}
             />
-            </Link>
           </div>
         </div>
         <div>
