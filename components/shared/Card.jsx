@@ -1,3 +1,4 @@
+import { makePayment } from "@/lib/payment/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -5,6 +6,8 @@ import React from "react";
 const Card = ({ track }) => {
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#1588ff] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
+      <button onClick={() => makePayment()}>click to buy</button>
+
       <Link
         href={`/events/${track._id}`}
         style={{ backgroundImage: `url(${track.imageUrl})` }}
