@@ -1,4 +1,5 @@
 "use client";
+import { makePayment } from "@/lib/payment/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -9,18 +10,7 @@ const Card = ({ track }) => {
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
-  const handleBuy = async (trackId) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ trackId }),
-    };
-    const response = await fetch("/api/files/buy", options);
-    const data = await response.json();
-    console.log(data);
-  };
+
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#ff8d30] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
       <div
@@ -48,7 +38,8 @@ const Card = ({ track }) => {
               height={20}
               alt="cart"
               onClick={() => {
-                handleBuy(track._id);
+                // track._id todo when dynamic data is added put track._id here
+                makePayment("65d20160013ab03326fdc5aa");
               }}
             />
           </div>
