@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function Profile() {
-  return <div>this is protected</div>;
+  return (
+    <h1>hi</h1>
+  )
 }

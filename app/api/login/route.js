@@ -28,7 +28,11 @@ export const POST = async (request) => {
     const { password, email } = await request.json();
     const user = await User.findOne({ email });
     if (!user) {
-      throw Error("No user find with this email");
+      return NextResponse.json({
+        message: "No user find with this email",
+        status: 404,
+      });
+      // throw Error("No user find with this email");
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);

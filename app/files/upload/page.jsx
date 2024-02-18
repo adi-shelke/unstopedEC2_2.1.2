@@ -9,6 +9,7 @@ const SignUp = () => {
     tags: "",
     file: "",
     genre: "",
+    thumbnail: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -39,7 +40,12 @@ const SignUp = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("price", formData.price);
+    formDataToSend.append("file", formData.file);
+    formDataToSend.append("tags", formData.tags);
+    formDataToSend.append("genre", formData.genre);
     // Basic validation
     const newErrors = {};
     if (!formData.title || formData.length < 3) {

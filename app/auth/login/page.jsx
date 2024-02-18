@@ -15,6 +15,7 @@ const page = () => {
             className="w-[80%] "
             width={500}
             height={500}
+            alt="login image"
           />
         </div>
       </div>

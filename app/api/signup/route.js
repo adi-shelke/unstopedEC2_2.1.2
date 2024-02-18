@@ -27,7 +27,10 @@ export const POST = async (request) => {
     await connectToDatabase();
     const { name, password, repeatpassword, email } = await request.json();
     if (password !== repeatpassword) {
-      throw Error("password dont match");
+      return NextResponse.json({
+        message: "Wrong credentials",
+        status: 404,
+      });
     }
     console.log(name, password);
     const salt = await bcrypt.genSalt(10);

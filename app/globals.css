@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+html {
+  scroll-behavior: smooth;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -33,6 +35,7 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+    scroll-behavior: smooth;
   }
  
   .dark {
@@ -146,7 +149,43 @@ li{
   list-style: none;
 }
 
-
-.swiper-slide{
-
+audio::-webkit-media-controls-panel {
+  background-color: #1d9bd9;
 }
+
+audio::-webkit-media-controls-play-button {
+  background-color: #dd910c;
+  border-radius: 50%;
+}
+
+audio::-webkit-media-controls-play-button:hover {
+  background-color: rgba(177,212,224, .7);
+}
+audio::-webkit-media-controls-current-time-display {
+  color: #fff;
+}
+audio::-webkit-media-controls-time-remaining-display {
+  color: #fff;
+}
+audio::-webkit-media-controls-volume-slider {
+  background-color: #B1D4E0;
+  border-radius: 25px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+audio::-webkit-media-controls-timeline {
+  background-color: #B1D4E0;
+  border-radius: 25px;
+  margin-left: 10px;
+  /* margin-right: 10px; */
+}
+
+
+
+
+
+
+
+
+
+
