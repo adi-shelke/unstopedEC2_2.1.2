@@ -9,6 +9,7 @@ const SignUp = () => {
     tags: "",
     file: "",
     genre: "",
+    thumbnail: "",
   });
 
   const [errors, setErrors] = useState({});

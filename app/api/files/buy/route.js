@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function POST(request) {
+  try {
     const data = await request.json();
-    console.log(data);
-      // ...
-      return NextResponse.json({ message: 'GET request to /api/files/buy/:trackId'});
-    
+    const trackId = data.trackId;
+  } catch (error) {
+    console.log(error);
   }
+  return NextResponse.json({ success: "the file is uploaded successfully" });
+}

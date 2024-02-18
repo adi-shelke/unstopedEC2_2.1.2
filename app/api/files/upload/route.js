@@ -16,7 +16,9 @@ export async function POST(request) {
   const formData = await request.formData();
   const file = formData.get("file");
   const title = formData.get("title");
-  
+  const price = formData.get("price");
+  const tags = formData.get("tags");
+  const genre = formData.get("genre");
   const buffer = Buffer.from(await file.arrayBuffer());
   const hexFileName = crypto.randomBytes(32).toString("hex");
 

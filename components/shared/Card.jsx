@@ -10,17 +10,16 @@ const Card = ({ track }) => {
     setIsPlaying(!isPlaying);
   };
   const handleBuy = async (trackId) => {
-    console.log("Hii");
-    console.log(trackId);
-    const options={
-      method: "GET",
+    const options = {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      data: JSON.stringify({ trackId }),
-    }
-    const response = await fetch(`/api/files/buy`,options);
+      body: JSON.stringify({ trackId }),
+    };
+    const response = await fetch("/api/files/buy", options);
     const data = await response.json();
+    console.log(data);
   };
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#6a849f] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
@@ -48,7 +47,9 @@ const Card = ({ track }) => {
               width={20}
               height={20}
               alt="cart"
-              onClick={() => {handleBuy(track._id)}}
+              onClick={() => {
+                handleBuy(track._id);
+              }}
             />
           </div>
         </div>
