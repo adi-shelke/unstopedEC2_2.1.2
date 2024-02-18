@@ -17,6 +17,7 @@ const Navbar = () => {
           width={30}
           height={15}
           alt="search"
+          className="w-auto"
         />
       </div>
       <ul className="">
@@ -28,6 +29,7 @@ const Navbar = () => {
                 width={20}
                 height={20}
                 className=""
+                alt="profile"
               />
               <p>Profile</p>
             </span>
@@ -41,6 +43,7 @@ const Navbar = () => {
                 width={20}
                 height={20}
                 className=""
+                alt="tracks"
               />
               Tracks
             </span>
@@ -49,18 +52,21 @@ const Navbar = () => {
         <li>
           <Link href="/auth/login">
             <span>
-              <Image src="/assets/icons/login.png" width={20} height={20} />
+              <Image src="/assets/icons/login.png" width={20} height={20} alt="login"/>
               Login
             </span>
           </Link>
         </li>
-        {/* <li>
-          <a href="#">
-            <span>
-              Summary
-            </span>
-          </a>
-        </li> */}
+        <li>
+          <Link href="/user/notifications">
+            <Image
+              src="/assets/icons/notification.png"
+              width={20}
+              height={20}
+              alt="notification"
+            />
+          </Link>
+        </li>
       </ul>
     </div>
   );
