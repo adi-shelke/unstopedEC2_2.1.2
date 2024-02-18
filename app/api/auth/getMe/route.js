@@ -16,7 +16,7 @@ export const GET = async (request) => {
 
     token = token?.split("=")?.[1];
     if (!token) {
-      return NextResponse.error("You need to log in");
+      return NextResponse.json({ status: 401, message: "Login to get access" });
     }
     const {
       payload: { id },
@@ -30,11 +30,11 @@ export const GET = async (request) => {
     await connectToDatabase();
     const user = await User.findById(userId);
     if (!user) {
-      return NextResponse.error("You need to log in");
+      return NextResponse.json({ status: 401, message: "Login to get access" });
     }
     user.password = null;
     return NextResponse.json({
-      status: "success",
+      status: 200,
       data: user,
     });
   } catch (err) {

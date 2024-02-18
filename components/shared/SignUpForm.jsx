@@ -52,8 +52,8 @@ const SignUp = () => {
       const result = await submitDataSignup(formData);
       if (result.status == 500) setloginError(true);
       else
-      router.push('/')
-      console.log("Form submitted:", formData);
+      router.push('/auth/login')
+      // console.log("Form submitted:", formData);
     }
   };
   return (

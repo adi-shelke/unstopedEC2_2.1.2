@@ -16,6 +16,7 @@ export const GET = async (request, { params }) => {
     const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
 
     let token = request.headers.get("cookie").split(" ")[1];
+    console.log("Toke: ",token);
     if (!token.startsWith("OutSiteJWT="));
     //   console.log(token);
     token = token.split("=")[1];
@@ -84,7 +85,7 @@ export const GET = async (request, { params }) => {
     console.log(session);
     // send it to client
     return NextResponse.json({
-      status: "success",
+      status: 200,
       id: session.id,
     });
   } catch (err) {

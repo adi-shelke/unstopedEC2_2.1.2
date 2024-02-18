@@ -10,6 +10,11 @@ const Card = ({ track }) => {
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
+  const handleBuy = async (trackId) => {
+    const result = await makePayment(trackId);
+    const data = await result.json();
+    console.log(data);
+  }
 
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#ff8d30] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
@@ -38,8 +43,9 @@ const Card = ({ track }) => {
               height={20}
               alt="cart"
               onClick={() => {
+                handleBuy("65d20160013ab03326fdc5aa")
                 // track._id todo when dynamic data is added put track._id here
-                makePayment("65d20160013ab03326fdc5aa");
+                // makePayment("65d20160013ab03326fdc5aa");
               }}
             />
           </div>

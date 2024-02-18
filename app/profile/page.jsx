@@ -1,7 +1,18 @@
+import Navbar from "@/components/shared/Navbar";
+import ProfileHero from "@/components/shared/ProfileHero";
 import React from "react";
 
 export default function Profile() {
   return (
-    <h1>hi</h1>
-  )
+    <div className="w-full bg-[#363849] min-h-screen">
+      <div>
+        <Navbar />
+      </div>
+      <div className="w-full">
+        <div className="w-full h-[100%]">
+          <ProfileHero />
+        </div>
+      </div>
+    </div>
+  );
 }
