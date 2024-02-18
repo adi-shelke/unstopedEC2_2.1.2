@@ -12,7 +12,11 @@ const s3 = new S3Client({
 });
 
 export async function POST(request) {
-  const file = (await request.formData()).get("file");
+  // const file = (await request.formData()).get("file");
+  const formData = await request.formData();
+  const file = formData.get("file");
+  const title = formData.get("title");
+  
   const buffer = Buffer.from(await file.arrayBuffer());
   const hexFileName = crypto.randomBytes(32).toString("hex");
 

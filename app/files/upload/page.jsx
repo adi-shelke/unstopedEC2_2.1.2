@@ -61,12 +61,19 @@ const SignUp = () => {
 
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
-      const options = {
+      // TODO: Submit the file to the backend route
+      console.log("File submitted:", formData.file);
+      const form = new FormData();
+      for (const key in formData) {
+        if (Object.hasOwnProperty.call(formData, key)) {
+          form.append(key, formData[key]);
+        }
+      }
+      const response = await fetch("/api/files/upload", {
         method: "POST",
-        body: formDataToSend,
-      };
-      const response = await fetch("/api/files/upload", options);
-      // Here you can submit the form data
+        body: form,
+      }).then((res) => res.json());
+      console.log("response: ", response);
       console.log("Form submitted:", formData);
     }
   };
@@ -134,7 +141,7 @@ const SignUp = () => {
             type="file"
             name="file"
             onChange={handleFileChange}
-            placeholder="Select file to upload"
+            placeholder="Enter file"
             className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
               errors?.file ? "border-red-500 " : ""
             }`}
