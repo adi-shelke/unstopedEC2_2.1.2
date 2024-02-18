@@ -112,7 +112,7 @@ li:last-child a {
   border-radius: 0 8px 8px 0;
 }
 
-ul li a {
+ul li a,.anchor {
   background-color: #fff;
   color: #6b7280;
   display: inline-flex;

@@ -1,8 +1,26 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const router = useRouter();
+  const verifyUser = async () => {
+    const res = await fetch("/api/auth/getMe");
+    const data = await res.json();
+    if (data.status !== 200) router.push("/auth/login");
+    setisLoggedIn(true);
+  };
+  useEffect(() => {
+    verifyUser();
+  }, []);
+
+  const handleLogout = async () => {
+
+    router.push("/auth/login");
+  };
   return (
     <div className="h-[60px] flex items-center w-full justify-between bg-[#363849] px-7">
       <div className="text-white">
@@ -34,7 +52,6 @@ const Navbar = () => {
                 className=""
                 alt="profile"
               />
-              <p>Profile</p>
             </span>
           </Link>
         </li>
@@ -48,7 +65,6 @@ const Navbar = () => {
                 className=""
                 alt="tracks"
               />
-              Tracks
             </span>
           </Link>
         </li>
@@ -65,17 +81,29 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link href="/auth/login">
-            <span>
-              <Image
-                src="/assets/icons/login.png"
-                width={20}
-                height={20}
-                alt="login"
-              />
-              Login
-            </span>
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/api/auth/logout">
+              <span>
+                <Image
+                  src="/assets/icons/logout.png"
+                  width={20}
+                  height={20}
+                  alt="login"
+                />
+              </span>
+            </Link>
+          ) : (
+            <Link href="/auth/login">
+              <span>
+                <Image
+                  src="/assets/icons/login.png"
+                  width={20}
+                  height={20}
+                  alt="login"
+                />
+              </span>
+            </Link>
+          )}
         </li>
         <li>
           <Link href="/user/notifications">

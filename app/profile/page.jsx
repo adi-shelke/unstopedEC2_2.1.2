@@ -8,7 +8,7 @@ export default function Profile() {
       <div>
         <Navbar />
       </div>
-      <div className="w-full">
+      <div className="w-full h-[100vh]">
         <div className="w-full h-[100%]">
           <ProfileHero />
         </div>

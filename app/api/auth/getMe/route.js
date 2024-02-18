@@ -3,21 +3,30 @@ import { User } from "@/lib/database/models/User";
 import { NextResponse } from "next/server";
 const { jwtVerify } = require("jose-node-cjs-runtime");
 const { createSecretKey } = require("crypto");
+const cookie = require("cookie");
+
 export const GET = async (request) => {
   try {
     //GETTING USER ID
     //   secrete key
     const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
-
-    let token = request?.headers?.get("cookie")?.split(" ")?.[1];
+    const cookies = cookie.parse(request?.headers?.get("cookie"));
+    //console.log(cookies);
+    let token = cookies?.["OutSiteJWT"];
+    console.log(token);
     if (!token) {
-      return NextResponse.error("You need to log in");
+      console.log("No token in cookie");
+      return NextResponse.json({
+        status: 401,
+        message: "You need to log in",
+      });
     }
 
-    token = token?.split("=")?.[1];
-    if (!token) {
-      return NextResponse.json({ status: 401, message: "Login to get access" });
-    }
+    // token = token?.split("=")?.[1];
+    // if (!token) {
+    //   console.log("No token");
+    //   return NextResponse.json({ status: 401, message: "Login to get access" });
+    // }
     const {
       payload: { id },
       protectedHeader,
@@ -30,6 +39,7 @@ export const GET = async (request) => {
     await connectToDatabase();
     const user = await User.findById(userId);
     if (!user) {
+      console.log("No user");
       return NextResponse.json({ status: 401, message: "Login to get access" });
     }
     user.password = null;
@@ -39,7 +49,9 @@ export const GET = async (request) => {
     });
   } catch (err) {
     console.log(err);
-    console.log("error in get me");
-    return NextResponse.error("You need to log in ");
+    return NextResponse.json({
+      status: 401,
+      message: "Unauthorized access",
+    });
   }
 };
