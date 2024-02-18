@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 
 const { jwtVerify } = require("jose-node-cjs-runtime");
 const { createSecretKey } = require("crypto");
+const cookie = require("cookie");
 
 const stripe = require("stripe")(process.env.STRIPE_PVT);
 
@@ -14,11 +15,17 @@ export const GET = async (request, { params }) => {
     //GETTING USER ID
     //   secrete key
     const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
+    const cookies = cookie.parse(request?.headers?.get("cookie"));
+    let token = cookies?.["OutSiteJWT"];
+    console.log(token);
 
-    let token = request.headers.get("cookie").split(" ")[1];
-    if (!token.startsWith("OutSiteJWT="));
-    //   console.log(token);
-    token = token.split("=")[1];
+    if (!token) {
+      return NextResponse.json({
+        status: "fail",
+        message: "You need to log in",
+      });
+    }
+
     const {
       payload: { id },
       protectedHeader,

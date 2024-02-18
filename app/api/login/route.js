@@ -37,10 +37,7 @@ export const POST = async (request) => {
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      return NextResponse.json({
-        message: "Wrong Credentials",
-        status: 401,
-      });
+      throw Error("password do not match");
     }
 
     const token = await signToken(user._id);

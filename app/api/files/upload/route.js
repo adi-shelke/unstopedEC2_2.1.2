@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 const { jwtVerify } = require("jose-node-cjs-runtime");
 const { createSecretKey } = require("crypto");
+const cookie = require("cookie");
 
 import crypto from "crypto";
 import { File } from "@/lib/database/models/File";
@@ -29,16 +30,25 @@ export async function POST(request) {
   const buffer = Buffer.from(await file.arrayBuffer());
   const hexFileName = crypto.randomBytes(32).toString("hex");
   //   secrete key
-  // const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
+  const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
+  const cookies = cookie.parse(request?.headers?.get("cookie"));
+  let token = cookies?.["OutSiteJWT"];
+  console.log(token);
 
-  // let token = request.headers.get("cookie").split(" ")[1];
-  // if (!token?.startsWith("OutSiteJWT="));
-  // //   console.log(token);
-  // token = token?.split("=")[1];
-  // const { payload, protectedHeader } = await jwtVerify(token, secretKey, {
-  //   issuer: "urn:example:issuer", // issuer
-  //   audience: "urn:example:audience", // audience
-  // });
+  if (!token) {
+    return NextResponse.json({
+      status: "fail",
+      message: "You need to log in",
+    });
+  }
+
+  const {
+    payload: { id },
+    protectedHeader,
+  } = await jwtVerify(token, secretKey, {
+    issuer: "urn:example:issuer", // issuer
+    audience: "urn:example:audience", // audience
+  });
 
   // const userId = payload?.id || "";
   // console.log(userId);
