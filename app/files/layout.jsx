@@ -3,7 +3,7 @@ import React from "react";
 
 const layout = ({ children }) => {
   return (
-    <div className="bg-[#363849]">
+    <div className="w-[100vw] min-h-screen bg-[#363849]">
       <Navbar />
       {children}
     </div>

@@ -5,8 +5,6 @@ import React, { useState } from "react";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
