@@ -71,7 +71,8 @@ export async function POST(request) {
     genre: genre,
     price: price,
     url: publicURL,
-    imageUrl: "thumbnail-url",
+    imageUrl:
+      "https://dysspo-aws-upload-bucket-2.s3.ap-south-1.amazonaws.com/thumbnail.jpg",
     rating: 5,
     tags: tags,
   });

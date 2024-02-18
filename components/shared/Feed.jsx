@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import tracksData from "../../public/assets/data/tracks.json";
+// import tracksData from "../../public/assets/data/tracks.json";
 import Card from "./Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
-const Feed = () => {
+
+const Feed = ({ tracksData }) => {
   const pop = tracksData.filter((track) => track.genre === "pop");
   const rock = tracksData.filter((track) => track.genre === "rock");
   const electronic = tracksData.filter((track) => track.genre === "electronic");
