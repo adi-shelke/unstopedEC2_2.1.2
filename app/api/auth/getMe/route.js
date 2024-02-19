@@ -13,7 +13,7 @@ export const GET = async (request) => {
     const cookies = cookie.parse(request?.headers?.get("cookie"));
     //console.log(cookies);
     let token = cookies?.["OutSiteJWT"];
-    console.log(token);
+    // console.log(token);
     if (!token) {
       console.log("No token in cookie");
       return NextResponse.json({

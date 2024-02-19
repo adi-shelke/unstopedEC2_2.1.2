@@ -1,5 +1,5 @@
 const page = ({ params }) => {
-  console.log(params);
+  // console.log(params);
   return (
     <div>
       <h1>page</h1>

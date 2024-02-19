@@ -41,7 +41,7 @@ const LoginForm = () => {
       if (result.status == 404 || result.status==401) setloginError(true);
       else
         router.push("/");
-      console.log("Form submitted:", formData);
+      // console.log("Form submitted:", formData);
     }
   };
   return (

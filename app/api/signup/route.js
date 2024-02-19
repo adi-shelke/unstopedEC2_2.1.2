@@ -18,7 +18,6 @@ const signToken = async function (id) {
     .setAudience("urn:example:audience")
     .setExpirationTime(process.env.JWT_EXPIRES_IN)
     .sign(secretKey);
-  console.log(token);
   return token;
 };
 
@@ -32,7 +31,7 @@ export const POST = async (request) => {
         status: 404,
       });
     }
-    console.log(name, password);
+    // console.log(name, password);
     const salt = await bcrypt.genSalt(10);
     const hashpassword = await bcrypt.hash(password, salt);
     const newUser = new User({

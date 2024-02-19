@@ -18,7 +18,6 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = async () => {
-
     router.push("/auth/login");
   };
   return (
@@ -42,19 +41,22 @@ const Navbar = () => {
         />
       </div>
       <ul className="">
-        <li>
-          <Link href="/profile">
-            <span className="">
-              <Image
-                src="/assets/icons/profile.png"
-                width={20}
-                height={20}
-                className=""
-                alt="profile"
-              />
-            </span>
-          </Link>
-        </li>
+        {isLoggedIn && (
+          <li>
+            <Link href="/profile">
+              <span className="">
+                <Image
+                  src="/assets/icons/profile.png"
+                  width={20}
+                  height={20}
+                  className=""
+                  alt="profile"
+                />
+              </span>
+            </Link>
+          </li>
+        )}
+
         <li>
           <Link href="/#feed">
             <span>
