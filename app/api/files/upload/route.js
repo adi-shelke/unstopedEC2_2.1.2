@@ -38,7 +38,6 @@ export async function POST(request) {
   const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
   const cookies = cookie.parse(request?.headers?.get("cookie"));
   let token = cookies?.["OutSiteJWT"];
-  console.log(token);
 
   if (!token) {
     return NextResponse.json({
@@ -56,7 +55,7 @@ export async function POST(request) {
   });
 
   const userId = id;
-  console.log(userId);
+  // console.log(userId);
 
   const formData = await request.formData();
   const file = formData.get("file");
@@ -67,10 +66,10 @@ export async function POST(request) {
   const thumbnail = formData.get("thumbnail");
 
   const publicURL = await getPublicUrl(file);
-  console.log("publicURL: ", publicURL);
+  // console.log("publicURL: ", publicURL);
 
   const publicImageURL = await getPublicUrl(thumbnail);
-  console.log("publicImageURL: ", publicImageURL);
+  // console.log("publicImageURL: ", publicImageURL);
   // send the publicURL to metadata storage
   await connectToDatabase();
 

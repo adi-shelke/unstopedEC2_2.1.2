@@ -18,7 +18,6 @@ const signToken = async function (id) {
     .setAudience("urn:example:audience")
     .setExpirationTime(process.env.JWT_EXPIRES_IN)
     .sign(secretKey);
-  console.log(token);
   return token;
 };
 

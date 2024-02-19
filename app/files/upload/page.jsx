@@ -99,8 +99,8 @@ const SignUp = () => {
       })
         .then((res) => res.json())
         .catch((err) => console.log(err));
-      console.log("response: ", response);
-      console.log("Form submitted:", formData);
+      // console.log("response: ", response);
+      // console.log("Form submitted:", formData);
     }
   };
 

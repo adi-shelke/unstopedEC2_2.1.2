@@ -14,7 +14,7 @@ const Card = ({ track }) => {
   const handleBuy = async (trackId) => {
     const result = await makePayment(trackId);
     const data = await result.json();
-    console.log(data);
+    // console.log(data);
   };
 
   return (

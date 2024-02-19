@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Collections from "./Collections";
 
 const ProfileHero = () => {
   const [user, setuser] = useState({});
@@ -51,7 +52,7 @@ const ProfileHero = () => {
           <div className="pl-2">
             <p className="mt-2 text-[25px] font-bold">My Tracks</p>
             <div>
-              
+              <Collections user = {user}/>
             </div>
           </div>
         ) : (

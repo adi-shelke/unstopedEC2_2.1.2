@@ -74,7 +74,7 @@ export const GET = async (request, { params }) => {
       email: user.email,
       address,
     });
-    console.log(customer);
+    // console.log(customer);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
