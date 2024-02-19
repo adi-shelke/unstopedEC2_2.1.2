@@ -8,7 +8,6 @@ const cookie = require("cookie");
 
 import crypto from "crypto";
 import { File } from "@/lib/database/models/File";
-import { Schema } from "mongoose";
 import { connectToDatabase } from "@/lib/database/dbUtils";
 
 const s3 = new S3Client({
@@ -18,17 +17,23 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
-
-export async function POST(request) {
-  // const file = (await request.formData()).get("file");
-  const formData = await request.formData();
-  const file = formData.get("file");
-  const title = formData.get("title");
-  const price = formData.get("price");
-  const tags = formData.get("tags");
-  const genre = formData.get("genre");
+const getPublicUrl = async (file) => {
   const buffer = Buffer.from(await file.arrayBuffer());
   const hexFileName = crypto.randomBytes(32).toString("hex");
+
+  const putObjCmd = new PutObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: hexFileName,
+    Body: buffer,
+    ContentType: file.type,
+  });
+
+  await s3.send(putObjCmd);
+  const publicURL = (await getSignedUrl(s3, putObjCmd)).split("?")[0];
+  return publicURL;
+};
+
+export async function POST(request) {
   //   secrete key
   const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
   const cookies = cookie.parse(request?.headers?.get("cookie"));
@@ -52,16 +57,20 @@ export async function POST(request) {
 
   const userId = id;
   console.log(userId);
-  const putObjCmd = new PutObjectCommand({
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: hexFileName,
-    Body: buffer,
-    ContentType: file.type,
-  });
 
-  await s3.send(putObjCmd);
-  const publicURL = (await getSignedUrl(s3, putObjCmd)).split("?")[0];
+  const formData = await request.formData();
+  const file = formData.get("file");
+  const title = formData.get("title");
+  const price = formData.get("price");
+  const tags = formData.get("tags");
+  const genre = formData.get("genre");
+  const thumbnail = formData.get("thumbnail");
+
+  const publicURL = await getPublicUrl(file);
   console.log("publicURL: ", publicURL);
+
+  const publicImageURL = await getPublicUrl(thumbnail);
+  console.log("publicImageURL: ", publicImageURL);
   // send the publicURL to metadata storage
   await connectToDatabase();
 
@@ -71,7 +80,9 @@ export async function POST(request) {
     genre: genre,
     price: price,
     url: publicURL,
-    imageUrl: "thumbnail-url",
+    imageUrl:
+      publicImageURL ||
+      "https://dysspo-aws-upload-bucket-2.s3.ap-south-1.amazonaws.com/thumbnail.jpg",
     rating: 5,
     tags: tags,
   });

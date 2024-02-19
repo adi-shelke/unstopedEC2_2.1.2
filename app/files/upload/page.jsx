@@ -38,6 +38,25 @@ const SignUp = () => {
       setErrors({ file: "Please select a file that is smaller than 8 MB." });
     }
   };
+  const handleThumbnailChange = (e) => {
+    const selectedFile = e.target.files[0];
+    const fileSizeLimit = 2 * 1024 * 1024; // 2 MB
+    if (selectedFile && selectedFile.size <= fileSizeLimit) {
+      setFormData({
+        ...formData,
+        thumbnail: selectedFile,
+      });
+      setErrors({});
+    } else {
+      setFormData({
+        ...formData,
+        thumbnail: null,
+      });
+      setErrors({
+        thumbnail: "Please select a file that is smaller than 2 MB.",
+      });
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
@@ -46,6 +65,7 @@ const SignUp = () => {
     formDataToSend.append("file", formData.file);
     formDataToSend.append("tags", formData.tags);
     formDataToSend.append("genre", formData.genre);
+    formDataToSend.append("thumbnail", formData.thumbnail);
     // Basic validation
     const newErrors = {};
     if (!formData.title || formData.length < 3) {
@@ -57,13 +77,16 @@ const SignUp = () => {
     if (!formData.file) {
       newErrors.file = "Please select a file to upload";
     }
+    if (!formData.thumbnail) {
+      newErrors.thumbnail = "Please select a thumbnail to upload";
+    }
 
     setErrors(newErrors);
 
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // TODO: Submit the file to the backend route
-      console.log("File submitted:", formData.file);
+      // console.log("File submitted:", formData.file);
       const form = new FormData();
       for (const key in formData) {
         if (Object.hasOwnProperty.call(formData, key)) {
@@ -140,17 +163,37 @@ const SignUp = () => {
           />
         </div>
         <div className="mb-4">
-          <input
-            type="file"
-            name="file"
-            onChange={handleFileChange}
-            placeholder="Enter file"
-            className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-              errors?.file ? "border-red-500 " : ""
-            }`}
-          />
+          <label>
+            Your Beat
+            <input
+              type="file"
+              name="file"
+              onChange={handleFileChange}
+              placeholder="Enter file"
+              className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                errors?.file ? "border-red-500 " : ""
+              }`}
+            />
+          </label>
           {errors?.file && (
             <p className="text-red-500 text-sm mt-1">{errors?.file}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label>
+            Thumbnail
+            <input
+              type="file"
+              name="thumbnail"
+              onChange={handleThumbnailChange}
+              placeholder="Enter file"
+              className={`w-full px-3 py-2   hover:shadow-lg duration-500 ease-in-out hover:shadow-black border border-gray-700 bg-[#ffffff] rounded-md placeholder-gray-500 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                errors?.thumbnail ? "border-red-500 " : ""
+              }`}
+            />
+          </label>
+          {errors?.thumbnail && (
+            <p className="text-red-500 text-sm mt-1">{errors?.thumbnail}</p>
           )}
         </div>
         <button
