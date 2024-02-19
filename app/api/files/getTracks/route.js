@@ -5,6 +5,7 @@ export async function POST(request) {
   try {
     const data = await request.json();
     const userId = data.userId;
+    console.log("userId", userId)
     const tracks = await File.find({ author: userId });
     // console.log(tracks);
     return NextResponse.json({status: 200, tracks});
