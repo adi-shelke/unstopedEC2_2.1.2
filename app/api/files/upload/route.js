@@ -88,5 +88,6 @@ export async function POST(request) {
   });
   await dbFile.save();
   console.log("dbFile: ", dbFile);
+  console.log(await File.findById(dbFile._id).exec());
   return NextResponse.json({ success: "the file is uploaded successfully" });
 }
