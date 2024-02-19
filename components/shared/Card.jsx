@@ -6,6 +6,7 @@ import React, { useState } from "react";
 
 const Card = ({ track }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -14,7 +15,7 @@ const Card = ({ track }) => {
     const result = await makePayment(trackId);
     const data = await result.json();
     console.log(data);
-  }
+  };
 
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[300px] flex-col overflow-hidden rounded-xl bg-[#ff8d30] shadow-md transition-all hover:shadow-lg md:min-h-[300px] mx-3 text-white">
@@ -43,7 +44,7 @@ const Card = ({ track }) => {
               height={20}
               alt="cart"
               onClick={() => {
-                handleBuy("65d20160013ab03326fdc5aa")
+                handleBuy(track._id);
                 // track._id todo when dynamic data is added put track._id here
                 // makePayment("65d20160013ab03326fdc5aa");
               }}
@@ -52,7 +53,8 @@ const Card = ({ track }) => {
         </div>
         <div>
           <audio
-            src="https://dysspo-aws-upload-bucket-2.s3.ap-south-1.amazonaws.com/sample-3s.mp3"
+            src={track.url}
+            controlsList={isPaid ? "" : "nodownload"}
             controls
             autoPlay={isPlaying}
             className="w-[100%] "
