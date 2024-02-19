@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const SignUp = () => {
@@ -11,6 +12,7 @@ const SignUp = () => {
     genre: "",
     thumbnail: "",
   });
+  const router = useRouter();
 
   const [errors, setErrors] = useState({});
 
@@ -99,7 +101,8 @@ const SignUp = () => {
       })
         .then((res) => res.json())
         .catch((err) => console.log(err));
-      // console.log("response: ", response);
+      console.log("response: ", response);
+      router.push("/")
       // console.log("Form submitted:", formData);
     }
   };
@@ -107,7 +110,7 @@ const SignUp = () => {
   return (
     <div className="flex items-center min-h-screen">
       <form className=" mx-auto p-6 rounded-lg shadow-md bg-[#3a5ba0] w-[60%] sm:w-[30%]">
-        <h2 className="text-2xl font-bold mb-4 text-white">Sign up</h2>
+        <h2 className="text-2xl font-bold mb-4 text-white">Upload Track</h2>
         <div className="mb-4">
           <input
             type="text"
