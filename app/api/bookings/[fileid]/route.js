@@ -74,11 +74,14 @@ export const GET = async (request, { params }) => {
       email: user.email,
       address,
     });
-    // console.log(customer);
-
+    console.log(customer);
+    const successUrl = new URL("http://localhost:3000/bookings/success");
+    successUrl.searchParams.append("callbackUrl", "/bookings/field");
+    successUrl.searchParams.append("userId", userId);
+    successUrl.searchParams.append("fileId", fileid);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      success_url: "http://localhost:3000/",
+      success_url: successUrl,
       cancel_url: "http://localhost:3000/",
       // get customer email
       //   customer_email: user.email,
@@ -96,7 +99,7 @@ export const GET = async (request, { params }) => {
   } catch (err) {
     return NextResponse.json({
       status: 500,
-      message:error
+      message: error,
     });
     console.log(err);
     console.log("Some error happend while creating your session");
