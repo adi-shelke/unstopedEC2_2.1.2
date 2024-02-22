@@ -1,14 +1,10 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { NextResponse } from "next/server";
-
-const { jwtVerify } = require("jose-node-cjs-runtime");
-const { createSecretKey } = require("crypto");
-const cookie = require("cookie");
-
 import crypto from "crypto";
 import { File } from "@/lib/database/models/File";
 import { connectToDatabase } from "@/lib/database/dbUtils";
+import { auth } from "@/auth";
 
 const s3 = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
@@ -34,27 +30,14 @@ const getPublicUrl = async (file) => {
 };
 
 export async function POST(request) {
-  //   secrete key
-  const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
-  const cookies = cookie.parse(request?.headers?.get("cookie"));
-  let token = cookies?.["OutSiteJWT"];
-
-  if (!token) {
-    return NextResponse.json({
-      status: "fail",
-      message: "You need to log in",
-    });
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json(
+      { status: 401, message: "unauthorized" },
+      { status: 401 }
+    );
   }
-
-  const {
-    payload: { id },
-    protectedHeader,
-  } = await jwtVerify(token, secretKey, {
-    issuer: "urn:example:issuer", // issuer
-    audience: "urn:example:audience", // audience
-  });
-
-  const userId = id;
+  const userId = session.user.id;
   // console.log(userId);
 
   const formData = await request.formData();
