@@ -1,16 +1,24 @@
+import { auth } from "@/auth";
 import Navbar from "@/components/shared/Navbar";
 import ProfileHero from "@/components/shared/ProfileHero";
+import { redirect } from "next/navigation";
 import React from "react";
 
-export default function Profile() {
+export default async function Profile() {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/auth/signin");
+  }
+
   return (
     <div className="w-full bg-[#363849] min-h-screen">
       <div>
-        <Navbar />
+        <Navbar isSession={!!session} />
       </div>
       <div className="w-full h-[100vh]">
         <div className="w-full h-[100%]">
-          <ProfileHero />
+          <ProfileHero userIdr={session.user?.id} />
         </div>
       </div>
     </div>

@@ -1,21 +1,11 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Collections from "./Collections";
 
-const ProfileHero = () => {
-  const [user, setuser] = useState({});
+const ProfileHero = ({ user }) => {
   const [menu, setmenu] = useState("mytracks");
-  const verifyUser = async () => {
-    const res = await fetch("/api/auth/getMe");
-    const data = await res.json();
-    console.log(data.data);
-    setuser(data.data);
-  };
-  useEffect(() => {
-    verifyUser();
-  }, []);
+
   return (
     <div className="w-full h-[100%] flex items-center flex-col bg-[#363849]">
       <div className="w-full bg-blue-500">
@@ -29,7 +19,7 @@ const ProfileHero = () => {
           />
         </div>
         <div className="flex justify-center text-white">
-          <p>{user.name}</p>
+          <p>{user?.name}</p>
         </div>
       </div>
       <div className="links h-[50px] bg-white w-full  flex items-center">
@@ -52,7 +42,7 @@ const ProfileHero = () => {
           <div className="pl-2">
             <p className="mt-2 text-[25px] font-bold">My Tracks</p>
             <div>
-              <Collections user = {user}/>
+              <Collections user={user} />
             </div>
           </div>
         ) : (

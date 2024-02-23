@@ -2,11 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-
 import { useRouter } from "next/navigation";
-const Navbar = () => {
-  const [isLoggedIn, setisLoggedIn] = useState(true);
+
+const Navbar = ({ isSession }) => {
+  const [isLoggedIn, setisLoggedIn] = useState(isSession);
   const router = useRouter();
+
   // const verifyUser = async () => {
   //   const res = await fetch("/api/auth/getMe");
   //   const data = await res.json();
