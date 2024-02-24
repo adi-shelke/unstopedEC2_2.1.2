@@ -4,8 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function GET(request, { params: { userId } }) {
   try {
-    // const { userId } = request.query;
     console.log("userId", userId);
+    if (userId.length() !== 24) {
+      return NextResponse.json(
+        { status: 403, message: "Invalid user-id" },
+        { status: 403 }
+      );
+    }
     await connectToDatabase();
     const tracks = await File.find({ author: userId }).exec();
     // console.log(tracks);

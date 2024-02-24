@@ -62,14 +62,12 @@ export async function POST(request) {
     genre: genre,
     price: price,
     url: publicURL,
-    imageUrl:
-      publicImageURL ||
-      "https://dysspo-aws-upload-bucket-2.s3.ap-south-1.amazonaws.com/thumbnail.jpg",
+    imageUrl: publicImageURL,
     rating: 5,
     tags: tags,
   });
   await dbFile.save();
   console.log("dbFile: ", dbFile);
-  console.log(await File.findById(dbFile._id).exec());
+  
   return NextResponse.json({ success: "the file is uploaded successfully" });
 }

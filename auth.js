@@ -6,9 +6,9 @@ import { connectToDatabase } from "./lib/database/dbUtils";
 import { compareSync } from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  // pages: {
-  //   signIn: "/auth/login",
-  // },
+  pages: {
+    signIn: "/auth/login",
+  },
   providers: [
     CredentialsProvider({
       credentials: {
@@ -16,6 +16,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: {},
       },
       async authorize(credentials) {
+        console.log("recieved credentials: ", credentials);
         await connectToDatabase();
         const { password, email } = credentials;
         const user = await User.findOne({ email }).exec();
@@ -23,19 +24,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const isPasswordCorrect = compareSync(password, user.password);
         if (!isPasswordCorrect) return null;
         console.log("Successfully Signed-In User: ", user);
-        return { id: user._id, email };
+        return { id: user._id, email, name: user.name };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.userId = user.id;
+        token.user = { ...user };
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.userId;
+      if (token.user) {
+        session.user = { ...token.user };
+      }
     },
 
     authorized({ request: { nextUrl }, auth }) {
@@ -49,7 +52,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (isProtectedRoute && !isLoggedIn) {
         const redirectUrl = new URL("/api/auth/signin", nextUrl.origin);
         redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
-        console.log("authorized redirectUrl: ", redirectUrl);
+        console.log("authorized redirectUrl: ", redirectUrl.toString());
         return NextResponse.redirect(redirectUrl);
       }
       return true;

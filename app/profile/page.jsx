@@ -10,6 +10,7 @@ export default async function Profile() {
   if (!session) {
     redirect("/auth/signin");
   }
+  console.log("session: ", session);
 
   return (
     <div className="w-full bg-[#363849] min-h-screen">
@@ -18,7 +19,7 @@ export default async function Profile() {
       </div>
       <div className="w-full h-[100vh]">
         <div className="w-full h-[100%]">
-          <ProfileHero userIdr={session.user?.id} />
+          <ProfileHero user={session.user} />
         </div>
       </div>
     </div>

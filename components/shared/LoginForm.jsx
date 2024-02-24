@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const LoginForm = () => {
+const LoginForm = ({ signIn }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -37,7 +37,9 @@ const LoginForm = () => {
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
+
       try {
+        // await signIn(formData);
         const result = await (
           await fetch("/api/login", {
             method: "POST",
@@ -46,12 +48,14 @@ const LoginForm = () => {
           })
         ).json();
         console.log("login-api-call result:", result);
-        if (result.status == 404 || result.status == 401) {
+        if (result.status !== 200) {
           setloginError(true);
         } else {
           router.push("/");
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (

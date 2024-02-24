@@ -85,7 +85,7 @@ const Navbar = ({ isSession }) => {
         </li>
         <li>
           {isLoggedIn ? (
-            <Link href="/api/auth/logout">
+            <Link href="/api/auth/signout">
               <span>
                 <Image
                   src="/assets/icons/logout.png"
