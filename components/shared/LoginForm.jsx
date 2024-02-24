@@ -2,10 +2,10 @@
 import { submitDataLogin } from "@/lib/auth/utils";
 import Link from "next/link";
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
-const LoginForm = () => {
-  const router = useRouter()
+const LoginForm = ({ signIn }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,11 +37,25 @@ const LoginForm = () => {
     // Submit form if no errors
     if (Object.keys(newErrors).length === 0) {
       // Here you can submit the form data
-      const result = await submitDataLogin(formData);
-      if (result.status == 404 || result.status==401) setloginError(true);
-      else
-        router.push("/");
-      // console.log("Form submitted:", formData);
+
+      try {
+        // await signIn(formData);
+        const result = await (
+          await fetch("/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          })
+        ).json();
+        console.log("login-api-call result:", result);
+        if (result.status !== 200) {
+          setloginError(true);
+        } else {
+          router.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (

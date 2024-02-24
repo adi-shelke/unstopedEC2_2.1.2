@@ -6,54 +6,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
-const Collections = () => {
-  const [user, setuser] = useState({});
+const Collections = ({ userId }) => {
   const [tracks, settracks] = useState([]);
-  const verifyUser = async () => {
-    try {
-      const res = await fetch("/api/auth/getMe");
-      const data = await res.json();
-      console.log(data.data);
-      setuser(data.data); // Set user state
-    } catch (error) {
-      console.error("Error verifying user:", error);
-    }
-  };
 
-  const getTracks = async (userId) => {
-    try {
-      console.log("user Id is", userId);
-      const res = await fetch("/api/files/getTracks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
-      });
-      const data = await res.json();
-      if (data.tracks.length === 0) {
-        console.log("No tracks");
-        return;
+  useEffect(() => {
+    const getTracks = async (userId) => {
+      try {
+        console.log("user Id is", userId);
+        const res = await fetch(`"/api/${userId}/tracks`);
+        const data = await res.json();
+        if (data.tracks.length === 0) {
+          console.log("No tracks");
+        } else {
+          settracks(data.tracks); // Set tracks state
+        }
+      } catch (error) {
+        console.error("Error fetching tracks:", error);
       }
-      settracks(data.tracks); // Set tracks state
-    } catch (error) {
-      console.error("Error fetching tracks:", error);
-    }
-  };
-
-  useEffect(() => {
-    const construct = async () => {
-      console.log("inside useEffect");
-      await verifyUser(); // Call verifyUser to set user state
     };
-    construct();
-  }, []); // Empty dependency array to run once on mount
 
-  useEffect(() => {
-    if (user._id) { // Only call getTracks if user._id is truthy
-      getTracks(user._id);
+    // Only call getTracks if userId exists
+    if (userId) {
+      getTracks(userId);
     }
-  }, [user]);
+  }, [userId]);
   return (
     <div className="w-full bg-black h-[100%]">
       <div className="w-full flex justify-center">

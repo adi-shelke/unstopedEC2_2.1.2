@@ -2,20 +2,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-const Navbar = () => {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+
+const Navbar = ({ isSession }) => {
+  const [isLoggedIn, setisLoggedIn] = useState(isSession);
   const router = useRouter();
-  const verifyUser = async () => {
-    const res = await fetch("/api/auth/getMe");
-    const data = await res.json();
-    if (data.status !== 200) router.push("/auth/login");
-    setisLoggedIn(true);
-  };
-  useEffect(() => {
-    verifyUser();
-  }, []);
+
+  // const verifyUser = async () => {
+  //   const res = await fetch("/api/auth/getMe");
+  //   const data = await res.json();
+  //   if (data.status !== 200) router.push("/auth/login");
+  //   setisLoggedIn(true);
+  // };
+  // useEffect(() => {
+  //   verifyUser();
+  // }, []);
 
   const handleLogout = async () => {
     router.push("/auth/login");
@@ -84,7 +85,7 @@ const Navbar = () => {
         </li>
         <li>
           {isLoggedIn ? (
-            <Link href="/api/auth/logout">
+            <Link href="/api/auth/signout">
               <span>
                 <Image
                   src="/assets/icons/logout.png"

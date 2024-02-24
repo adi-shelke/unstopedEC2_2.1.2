@@ -1,40 +1,23 @@
+import { auth } from "@/auth";
 import { connectToDatabase } from "@/lib/database/dbUtils";
 import { File } from "@/lib/database/models/File";
 import { User } from "@/lib/database/models/User";
 import { error } from "console";
 import { NextResponse } from "next/server";
 
-const { jwtVerify } = require("jose-node-cjs-runtime");
-const { createSecretKey } = require("crypto");
-const cookie = require("cookie");
-
 const stripe = require("stripe")(process.env.STRIPE_PVT);
 
 export const GET = async (request, { params }) => {
   const { fileid } = params;
   try {
-    //GETTING USER ID
-    //   secrete key
-    const secretKey = createSecretKey(process.env.JWT_STRING, "utf-8");
-    const cookies = cookie.parse(request?.headers?.get("cookie"));
-    let token = cookies?.["OutSiteJWT"];
-
-    if (!token) {
-      return NextResponse.json({
-        status: "fail",
-        message: "You need to log in",
-      });
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json(
+        { status: 401, message: "unauthorized" },
+        { status: 401 }
+      );
     }
-
-    const {
-      payload: { id },
-      protectedHeader,
-    } = await jwtVerify(token, secretKey, {
-      issuer: "urn:example:issuer", // issuer
-      audience: "urn:example:audience", // audience
-    });
-
-    const userId = id;
+    const userId = session.user.id;
     await connectToDatabase();
 
     const user = await User.findById(userId);
@@ -79,7 +62,7 @@ export const GET = async (request, { params }) => {
     successUrl.searchParams.append("callbackUrl", "/bookings/field");
     successUrl.searchParams.append("userId", userId);
     successUrl.searchParams.append("fileId", fileid);
-    const session = await stripe.checkout.sessions.create({
+    const transactionSession = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       success_url: successUrl,
       cancel_url: "http://localhost:3000/",
@@ -94,7 +77,7 @@ export const GET = async (request, { params }) => {
     // send it to client
     return NextResponse.json({
       status: 200,
-      id: session.id,
+      id: transactionSession.id,
     });
   } catch (err) {
     return NextResponse.json({
